@@ -1,0 +1,76 @@
+package com.example.madcamp_week3;
+
+import android.app.Service;
+import android.content.Intent;
+import android.os.Environment;
+import android.os.IBinder;
+import android.util.Log;
+
+import com.coremedia.iso.boxes.Container;
+import com.googlecode.mp4parser.authoring.Movie;
+import com.googlecode.mp4parser.authoring.Track;
+import com.googlecode.mp4parser.authoring.builder.DefaultMp4Builder;
+import com.googlecode.mp4parser.authoring.container.mp4.MovieCreator;
+import com.googlecode.mp4parser.authoring.tracks.AppendTrack;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.nio.channels.FileChannel;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+public class AppendService extends Service {
+    public AppendService() {
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        // TODO: Return the communication channel to the service.
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        String mp3File1 = Environment.getExternalStorageDirectory() + "/Download/target-1.mp3";
+        String mp3File2 = Environment.getExternalStorageDirectory() + "/Download/target.mp3";
+
+        String[] sfs = {mp3File1, mp3File2};
+        mergeMediaFiles(true, sfs, Environment.getExternalStorageDirectory() + "/Download/merged.mp3" );
+
+
+    }
+
+    public static boolean mergeMediaFiles(boolean isAudio, String sourceFiles[], String targetFile) {
+        try {
+            String mediaKey = isAudio ? "soun" : "vide";
+            List<Movie> listMovies = new ArrayList<>();
+            for (String filename : sourceFiles) {
+                listMovies.add(MovieCreator.build(filename));
+            }
+            List<Track> listTracks = new LinkedList<>();
+            for (Movie movie : listMovies) {
+                for (Track track : movie.getTracks()) {
+                    if (track.getHandler().equals(mediaKey)) {
+                        listTracks.add(track);
+                    }
+                }
+            }
+            Movie outputMovie = new Movie();
+            if (!listTracks.isEmpty()) {
+                outputMovie.addTrack(new AppendTrack(listTracks.toArray(new Track[listTracks.size()])));
+            }
+            Container container = new DefaultMp4Builder().build(outputMovie);
+            FileChannel fileChannel = new RandomAccessFile(String.format(targetFile), "rws").getChannel();
+            container.writeContainer(fileChannel);
+            fileChannel.close();
+            return true;
+        }
+        catch (IOException e) {
+            Log.e("MYTAG", "Error merging media files. exception: "+e.getMessage());
+            return false;
+        }
+    }
+}
