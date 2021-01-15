@@ -20,6 +20,7 @@ public class SearchFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+    //하하하하하하
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
