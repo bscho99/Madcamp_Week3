@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+<<<<<<< HEAD
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
@@ -10,6 +11,15 @@ android {
         applicationId "com.example.app3_playlist"
         minSdkVersion 16
         targetSdkVersion 30
+=======
+    compileSdkVersion 28
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "com.example.madcamp_week3"
+        minSdkVersion 16
+        targetSdkVersion 28
+>>>>>>> 97ca6656230381238cff60c760cac25fa24b50fc
         versionCode 1
         versionName "1.0"
 
@@ -29,6 +39,7 @@ android {
 }
 
 dependencies {
+<<<<<<< HEAD
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
@@ -39,3 +50,19 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
+=======
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'com.github.HaarigerHarald:android-youtubeExtractor:master-SNAPSHOT'
+    implementation 'androidx.navigation:navigation-fragment:2.3.2'
+    implementation 'androidx.navigation:navigation-ui:2.3.2'
+    implementation 'com.arthenica:mobile-ffmpeg-full:4.2.2.LTS'
+    implementation 'com.googlecode.mp4parser:isoparser:1.0.5.4'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.writingminds:FFmpegAndroid:0.3.2'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
+>>>>>>> 97ca6656230381238cff60c760cac25fa24b50fc
