@@ -81,11 +81,15 @@ public class AudioExtractor {
         int offset = 0;
         int trackIndex = -1;
         ByteBuffer dstBuf = ByteBuffer.allocate(bufferSize);
+        Log.d("TAG", String.valueOf(bufferSize));
         MediaCodec.BufferInfo bufferInfo = new MediaCodec.BufferInfo();
+
         muxer.start();
+
         while (true) {
             bufferInfo.offset = offset;
             bufferInfo.size = extractor.readSampleData(dstBuf, offset);
+
             if (bufferInfo.size < 0) {
                 Log.d(TAG, "Saw input EOS.");
                 bufferInfo.size = 0;

@@ -32,14 +32,25 @@ public class AppendService extends Service {
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d("TAG", "Append service on start command");
+
+        // TODO: pass & get extras of the list of file paths to be appended as one audio file.
+
         String mp3File1 = Environment.getExternalStorageDirectory() + "/Download/target-1.mp3";
         String mp3File2 = Environment.getExternalStorageDirectory() + "/Download/target.mp3";
 
         String[] sfs = {mp3File1, mp3File2};
         mergeMediaFiles(true, sfs, Environment.getExternalStorageDirectory() + "/Download/merged.mp3" );
 
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        Log.d("TAG", "Append service called and created");
 
     }
 
